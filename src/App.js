@@ -10,6 +10,8 @@ const Container = styled.SafeAreaView`
 
 const View = styled.View``;
 
+const Text = styled.Text``;
+
 LocaleConfig.locales['fr'] = {
   monthNames: [
     '1월',
