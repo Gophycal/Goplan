@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components/native';
 import { Agenda, LocaleConfig } from 'react-native-calendars';
 import { TouchableOpacity } from 'react-native';
 import { Card, Paragraph, Avatar } from 'react-native-paper';
+import ItemContext from './ItemContext';
 
 const View = styled.View``;
 
@@ -51,11 +52,6 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
-// const timeToString = (time) => {
-//   const date = new Date(time);
-//   return date.toISOString().split('T')[0];
-// };
-
 const renderItem = (item) => {
   return (
     <TouchableOpacity style={{ marginRight: 10, marginTop: 17 }}>
@@ -80,70 +76,14 @@ const renderItem = (item) => {
 };
 
 const Calendar = ({ navigation }) => {
-  // const [items, setItems] = useState({});
+  const { items, setItems } = useContext(ItemContext);
+  console.log(items);
 
-  // const loadItems = (day) => {
-  //   setTimeout(() => {
-  //     for (let i = -15; i < 85; i++) {
-  //       const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-  //       const strTime = timeToString(time);
-
-  //       if (!items[strTime]) {
-  //         items[strTime] = [];
-
-  //         const numItems = Math.floor(Math.random() * 3 + 1);
-  //         for (let j = 0; j < numItems; j++) {
-  //           items[strTime].push({
-  //             name: 'Item for ' + strTime + ' #' + j,
-  //             height: Math.max(50, Math.floor(Math.random() * 150)),
-  //             day: strTime,
-  //           });
-  //         }
-  //       }
-  //     }
-
-  //     const newItems = {};
-  //     Object.keys(items).forEach((key) => {
-  //       newItems[key] = items[key];
-  //     });
-  //     setItems(newItems);
-  //   }, 1000);
-  // };
-
-  // const renderItem = (item) => {
-  //   return (
-  //     <TouchableOpacity style={{ marginRight: 10, marginTop: 17 }}>
-  //       <Card>
-  //         <Card.Content>
-  //           <View
-  //             style={{
-  //               flexDirection: 'row',
-  //               justifyContent: 'space-between',
-  //               alignItems: 'center',
-  //             }}
-  //           >
-  //             <Paragraph>{item.name}</Paragraph>
-  //             <Avatar.Text label="G" />
-  //           </View>
-  //         </Card.Content>
-  //       </Card>
-  //     </TouchableOpacity>
-  //   );
-  // };
   return (
     <>
       <Agenda
-        // items={items}
         // loadItemsForMonth={loadItems}
-        items={{
-          '2022-03-22': [{ name: '교생실습 준비', height: 10, day: '1234' }],
-          '2022-03-23': [{ name: '졸업파티', height: 80 }],
-          '2022-03-24': [],
-          '2022-03-25': [
-            { name: '생일 선물 사러 가기' },
-            { name: '적금 만기일' },
-          ],
-        }}
+        items={items}
         selected={'2022-03-22'}
         renderItem={renderItem}
       />

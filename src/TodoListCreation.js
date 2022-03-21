@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { Alert } from 'react-native';
+// import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import Input from './Input';
 import ItemContext from './ItemContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const View = styled.View``;
 const Text = styled.Text``;
@@ -29,15 +30,16 @@ function TodoListCreation() {
     if (newDate.length < 1 || newName.length < 1 || newDay.length < 1) {
       return;
     }
-    const ID = Date.now().toString();
+    const Date = newDate;
     const newItemObject = {
-      [ID]: { id: ID, date: newDate, name: newName, day: newDay },
+      [Date]: [{ name: newName, day: newDay }],
     };
     setNewDate('');
     setNewName('');
     setNewDay('');
     storeData({ ...items, ...newItemObject });
-    console.log('newItemObject: ', newItemObject);
+    // console.log('newItemObject: ', newItemObject);
+    // console.log('items: ', items);
   };
 
   const storeData = async (items) => {
@@ -45,7 +47,7 @@ function TodoListCreation() {
       await AsyncStorage.setItem('items', JSON.stringify(items));
       setItems(items);
     } catch (e) {
-      //
+      console.log('TodoListCreation StoreData error: ', e);
     }
   };
 
@@ -62,10 +64,6 @@ function TodoListCreation() {
   const _handleDayChange = (newDay) => {
     setNewDay(newDay);
     setErrorMessage(newDay.trim() ? '' : 'Please enter the day');
-  };
-
-  const onSubmit = () => {
-    return Alert.alert('Submitted!');
   };
 
   return (
