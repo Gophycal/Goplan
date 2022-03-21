@@ -8,9 +8,10 @@ const Text = styled.Text``;
 const Button = styled.Button``;
 
 function TodoListCreation() {
-  const [date, setDate] = useState('');
-  const [name, setName] = useState('');
-  const [day, setDay] = useState('');
+  const [newDate, setNewDate] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newDay, setNewDay] = useState('');
+  const [items, setItems] = useState({});
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -19,13 +20,9 @@ function TodoListCreation() {
   const refName = useRef(null);
   const refDay = useRef(null);
 
-  const [newDate, setNewDate] = useState('');
-  const [newName, setNewName] = useState('');
-  const [newDay, setNewDay] = useState('');
-
   useEffect(() => {
-    setDisabled(!(date && name && day && !errorMessage));
-  }, [date, name, day, errorMessage]);
+    setDisabled(!(newDate && newName && newDay && !errorMessage));
+  }, [newDate, newName, newDay, errorMessage]);
 
   const addItem = () => {
     if (newDate.length < 1 || newName.length < 1 || newDay.length < 1) {
@@ -38,31 +35,32 @@ function TodoListCreation() {
     setNewDate('');
     setNewName('');
     setNewDay('');
-    storeData({ ...tasks, ...newTaskObject });
+    storeData({ ...items, ...newItemObject });
+    console.log('newItemObject: ', newItemObject);
   };
 
-  const storeData = async (tasks) => {
+  const storeData = async (items) => {
     try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-      setTasks(tasks);
+      await AsyncStorage.setItem('items', JSON.stringify(items));
+      setItems(items);
     } catch (e) {
       //
     }
   };
 
-  const _handleDateChange = (date) => {
-    setDate(date);
-    setErrorMessage(date.trim() ? '' : 'Please enter the date');
+  const _handleDateChange = (newDate) => {
+    setNewDate(newDate);
+    setErrorMessage(newDate.trim() ? '' : 'Please enter the date');
   };
 
-  const _handleNameChange = (name) => {
-    setName(name);
-    setErrorMessage(name.trim() ? '' : 'Please enter the name');
+  const _handleNameChange = (newName) => {
+    setNewName(newName);
+    setErrorMessage(newName.trim() ? '' : 'Please enter the name');
   };
 
-  const _handleDayChange = (day) => {
-    setDay(day);
-    setErrorMessage(day.trim() ? '' : 'Please enter the day');
+  const _handleDayChange = (newDay) => {
+    setNewDay(newDay);
+    setErrorMessage(newDay.trim() ? '' : 'Please enter the day');
   };
 
   const onSubmit = () => {
@@ -74,7 +72,7 @@ function TodoListCreation() {
       <Text>TodoListCreation</Text>
       <Input
         label="date"
-        value={date}
+        value={newDate}
         placeholder="date"
         returnKeyType="next"
         onChangeText={_handleDateChange}
@@ -83,7 +81,7 @@ function TodoListCreation() {
       <Input
         label="name"
         ref={refName}
-        value={name}
+        value={newName}
         placeholder="name"
         returnKeyType="next"
         onChangeText={_handleNameChange}
@@ -91,19 +89,13 @@ function TodoListCreation() {
       />
       <Input
         label="day"
+        value={newDay}
         ref={refDay}
         placeholder="day"
         onChangeText={_handleDayChange}
-        onSubmitEditing={() => onSubmit()}
+        onSubmitEditing={addItem}
       />
-      <Button
-        title="Create"
-        placeholder="name"
-        disabled={disabled}
-        onPress={() => {
-          onSubmit();
-        }}
-      />
+      <Button title="Create" disabled={disabled} onPress={addItem} />
     </View>
   );
 }
