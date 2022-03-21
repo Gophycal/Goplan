@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import Input from './Input';
+import ItemContext from './ItemContext';
 
 const View = styled.View``;
 const Text = styled.Text``;
@@ -11,7 +12,7 @@ function TodoListCreation() {
   const [newDate, setNewDate] = useState('');
   const [newName, setNewName] = useState('');
   const [newDay, setNewDay] = useState('');
-  const [items, setItems] = useState({});
+  const { items, setItems } = useContext(ItemContext);
 
   const [errorMessage, setErrorMessage] = useState('');
 
