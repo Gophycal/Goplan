@@ -4,8 +4,11 @@ import { Agenda, LocaleConfig } from 'react-native-calendars';
 import { TouchableOpacity } from 'react-native';
 import { Card, Paragraph, Avatar } from 'react-native-paper';
 import ItemContext from './ItemContext';
+// import { useNavigation } from '@react-navigation/native';
 
 const View = styled.View``;
+
+const Text = styled.Text``;
 
 const Button = styled.Button``;
 
@@ -52,9 +55,50 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
+// function renderItem(item) {
+//   // const navigation = useNavigation();
+//   console.log(this);
+
+//   return (
+//     <TouchableOpacity
+//       style={{ marginRight: 10, marginTop: 17 }}
+//       onPress={() => {
+//         // navigation.navigate('TodoListUpdate', { item });
+//         // console.log(navigation);
+//         // console.log(item);
+//         // console.log({ navigation });
+//       }}
+//     >
+//       <Card>
+//         <Card.Content>
+//           <View
+//             style={{
+//               flexDirection: 'row',
+//               justifyContent: 'space-between',
+//               alignItems: 'center',
+//             }}
+//           >
+//             <Paragraph>{item.name}</Paragraph>
+//             <Paragraph>{item.height}</Paragraph>
+//             <Paragraph>{item.day}</Paragraph>
+//             <Avatar.Text label="승원" />
+//           </View>
+//         </Card.Content>
+//       </Card>
+//     </TouchableOpacity>
+//   );
+// }
+
 const renderItem = (item) => {
   return (
-    <TouchableOpacity style={{ marginRight: 10, marginTop: 17 }}>
+    <TouchableOpacity
+      style={{ marginRight: 10, marginTop: 17 }}
+      onPress={() => {
+        // navigation.navigate('TodoListUpdate', { item });
+        // console.log('renderItem');
+        console.log(item);
+      }}
+    >
       <Card>
         <Card.Content>
           <View
@@ -77,15 +121,36 @@ const renderItem = (item) => {
 
 const Calendar = ({ navigation }) => {
   const { items, setItems } = useContext(ItemContext);
-  console.log(items);
+
+  // console.log(navigation);
+  // console.log(Nav);
+
+  // console.log(this);
+  // console.log({ navigation });
 
   return (
     <>
       <Agenda
         // loadItemsForMonth={loadItems}
         items={items}
-        selected={'2022-03-22'}
+        selected={'2022-05-11'}
         renderItem={renderItem}
+        // Specify how agenda knob should look like
+        renderKnob={() => {
+          return (
+            <View>
+              <Text>renderKnob</Text>
+            </View>
+          );
+        }}
+        // Specify what should be rendered instead of ActivityIndicator
+        renderEmptyData={() => {
+          return (
+            <View>
+              <Text>renderEmptyData</Text>
+            </View>
+          );
+        }}
       />
       <Button
         style={{}}
