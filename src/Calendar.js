@@ -4,7 +4,7 @@ import { Agenda, LocaleConfig } from 'react-native-calendars';
 import { TouchableOpacity } from 'react-native';
 import { Card, Paragraph, Avatar } from 'react-native-paper';
 import ItemContext from './ItemContext';
-// import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const View = styled.View``;
 
@@ -55,48 +55,12 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
-// function renderItem(item) {
-//   // const navigation = useNavigation();
-//   console.log(this);
-
-//   return (
-//     <TouchableOpacity
-//       style={{ marginRight: 10, marginTop: 17 }}
-//       onPress={() => {
-//         // navigation.navigate('TodoListUpdate', { item });
-//         // console.log(navigation);
-//         // console.log(item);
-//         // console.log({ navigation });
-//       }}
-//     >
-//       <Card>
-//         <Card.Content>
-//           <View
-//             style={{
-//               flexDirection: 'row',
-//               justifyContent: 'space-between',
-//               alignItems: 'center',
-//             }}
-//           >
-//             <Paragraph>{item.name}</Paragraph>
-//             <Paragraph>{item.height}</Paragraph>
-//             <Paragraph>{item.day}</Paragraph>
-//             <Avatar.Text label="승원" />
-//           </View>
-//         </Card.Content>
-//       </Card>
-//     </TouchableOpacity>
-//   );
-// }
-
-const renderItem = (item) => {
+const renderItem = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={{ marginRight: 10, marginTop: 17 }}
       onPress={() => {
-        // navigation.navigate('TodoListUpdate', { item });
-        // console.log('renderItem');
-        console.log(item);
+        navigation.navigate('TodoListUpdate', { item });
       }}
     >
       <Card>
@@ -121,25 +85,20 @@ const renderItem = (item) => {
 
 const Calendar = ({ navigation }) => {
   const { items, setItems } = useContext(ItemContext);
-
-  // console.log(navigation);
-  // console.log(Nav);
-
-  // console.log(this);
-  // console.log({ navigation });
-
   return (
     <>
       <Agenda
         // loadItemsForMonth={loadItems}
         items={items}
-        selected={'2022-05-11'}
-        renderItem={renderItem}
+        selected={'2022-07-25'}
+        renderItem={(item, firstItemInDay) =>
+          renderItem({ item, firstItemInDay, navigation })
+        }
         // Specify how agenda knob should look like
         renderKnob={() => {
           return (
             <View>
-              <Text>renderKnob</Text>
+              <Text>아래로 내리세요</Text>
             </View>
           );
         }}
@@ -147,7 +106,7 @@ const Calendar = ({ navigation }) => {
         renderEmptyData={() => {
           return (
             <View>
-              <Text>renderEmptyData</Text>
+              <Text> 오늘 할 일 </Text>
             </View>
           );
         }}

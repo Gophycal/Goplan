@@ -5,11 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-chrome",
+            // "type": "pwa-chrome",
+            // "request": "launch",
+            // "name": "Launch Chrome against localhost",
+            // "url": "http://localhost:8080",
+            // "webRoot": "${workspaceFolder}"
+            "type": "reactnative",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "name": "iOS Device",
+            "program": "${workspaceRoot}/App.js",
+            "platform": "ios",
+            "target": "device",
+            // "outDir": "${workspaceRoot}/.vscode/.react",
+            "runArguments": [
+                "--device",
+                "DEVICE NAME"
+              ],
         }
     ]
 }
