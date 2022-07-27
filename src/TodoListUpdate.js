@@ -9,10 +9,18 @@ const View = styled.View``;
 const Text = styled.Text``;
 const Button = styled.Button``;
 
-function TodoListUpdate({ route, navigation }) {
-  const [newDate, setNewDate] = useState('');
-  const [newName, setNewName] = useState('');
-  const [newDay, setNewDay] = useState('');
+function TodoListUpdate({ route }) {
+  // console.log(route.params.item);
+  // console.log(Object.values(route.params.date));
+  // console.log(route.params.date);
+  // console.log(route.params.item['item']['day']);
+  // console.log(route.params.date['date']);
+
+  const [newDate, setNewDate] = useState(
+    JSON.stringify(route.params.date['date']).substr(1, 10)
+  );
+  const [newName, setNewName] = useState(route.params.item['item']['name']);
+  const [newDay, setNewDay] = useState(route.params.item['item']['day']);
   const { items, setItems } = useContext(ItemContext);
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -38,8 +46,6 @@ function TodoListUpdate({ route, navigation }) {
     setNewName('');
     setNewDay('');
     storeData({ ...items, ...newItemObject });
-    // console.log('newItemObject: ', newItemObject);
-    // console.log('items: ', items);
   };
 
   const storeData = async (items) => {
@@ -94,7 +100,7 @@ function TodoListUpdate({ route, navigation }) {
         onChangeText={_handleDayChange}
         onSubmitEditing={addItem}
       />
-      <Button title="Create" disabled={disabled} onPress={addItem} />
+      <Button title="Update" disabled={disabled} onPress={addItem} />
     </View>
   );
 }

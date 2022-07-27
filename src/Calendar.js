@@ -4,7 +4,6 @@ import { Agenda, LocaleConfig } from 'react-native-calendars';
 import { TouchableOpacity } from 'react-native';
 import { Card, Paragraph, Avatar } from 'react-native-paper';
 import ItemContext from './ItemContext';
-import { useNavigation } from '@react-navigation/native';
 
 const View = styled.View``;
 
@@ -55,12 +54,15 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
-const renderItem = ({ item, navigation }) => {
+const renderItem = ({ item, date, navigation }) => {
   return (
     <TouchableOpacity
       style={{ marginRight: 10, marginTop: 17 }}
       onPress={() => {
-        navigation.navigate('TodoListUpdate', { item });
+        navigation.navigate('TodoListUpdate', {
+          item: { item },
+          date: { date },
+        });
       }}
     >
       <Card>
@@ -85,15 +87,14 @@ const renderItem = ({ item, navigation }) => {
 
 const Calendar = ({ navigation }) => {
   const { items, setItems } = useContext(ItemContext);
+  console.log(items);
   return (
     <>
       <Agenda
         // loadItemsForMonth={loadItems}
         items={items}
-        selected={'2022-07-25'}
-        renderItem={(item, firstItemInDay) =>
-          renderItem({ item, firstItemInDay, navigation })
-        }
+        selected={'2022-07-28'}
+        renderItem={(item, date) => renderItem({ item, date, navigation })}
         // Specify how agenda knob should look like
         renderKnob={() => {
           return (
