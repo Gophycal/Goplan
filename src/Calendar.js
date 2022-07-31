@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/native';
 import { Agenda, LocaleConfig } from 'react-native-calendars';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import { Card, Paragraph, Avatar } from 'react-native-paper';
 import ItemContext from './ItemContext';
 
@@ -54,46 +54,47 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
-const renderItem = ({ item, date, navigation }) => {
-  return (
-    <TouchableOpacity
-      style={{ marginRight: 10, marginTop: 17 }}
-      onPress={() => {
-        navigation.navigate('TodoListUpdate', {
-          item: { item },
-          date: { date },
-        });
-      }}
-    >
-      <Card>
-        <Card.Content>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Paragraph>{item.name}</Paragraph>
-            <Paragraph>{item.height}</Paragraph>
-            <Paragraph>{item.day}</Paragraph>
-            <Avatar.Text label="승원" />
-          </View>
-        </Card.Content>
-      </Card>
-    </TouchableOpacity>
-  );
-};
-
 const Calendar = ({ navigation }) => {
   const { items, setItems } = useContext(ItemContext);
-  console.log(items);
+  // console.log(items);
+
+  const renderItem = ({ item, date, navigation }) => {
+    return (
+      <TouchableOpacity
+        style={{ marginRight: 10, marginTop: 17 }}
+        onPress={() => {
+          navigation.navigate('TodoListUpdate', {
+            item: { item },
+            date: { date },
+          });
+        }}
+      >
+        <Card>
+          <Card.Content>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Paragraph>{item.name}</Paragraph>
+              <Paragraph>{item.height}</Paragraph>
+              <Paragraph>{item.day}</Paragraph>
+              <Avatar.Text label="승원" />
+            </View>
+          </Card.Content>
+        </Card>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <>
       <Agenda
         // loadItemsForMonth={loadItems}
         items={items}
-        selected={'2022-07-28'}
+        selected={'2022-07-31'}
         renderItem={(item, date) => renderItem({ item, date, navigation })}
         // Specify how agenda knob should look like
         renderKnob={() => {
@@ -111,6 +112,9 @@ const Calendar = ({ navigation }) => {
             </View>
           );
         }}
+        // onDayPress={() => {
+        //   Alert.alert('Text');
+        // }}
       />
       <Button
         style={{}}

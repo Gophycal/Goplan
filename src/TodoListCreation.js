@@ -10,6 +10,7 @@ const Text = styled.Text``;
 const Button = styled.Button``;
 
 function TodoListCreation() {
+  const [index, setIndex] = useState(0);
   const [newDate, setNewDate] = useState('');
   const [newName, setNewName] = useState('');
   const [newDay, setNewDay] = useState('');
@@ -34,12 +35,18 @@ function TodoListCreation() {
     const newItemObject = {
       [Date]: [{ name: newName, day: newDay }],
     };
+    // const newItemObject = {
+    //   index: [{ [Date]: [{ name: newName, day: newDay }] }],
+    // };
     setNewDate('');
     setNewName('');
     setNewDay('');
     storeData({ ...items, ...newItemObject });
     // console.log('newItemObject: ', newItemObject);
     // console.log('items: ', items);
+    // setIndex(index + 1);
+    // console.log('Hi');
+    console.log(index);
   };
 
   const storeData = async (items) => {

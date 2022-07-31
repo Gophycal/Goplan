@@ -34,7 +34,7 @@ function TodoListUpdate({ route }) {
     setDisabled(!(newDate && newName && newDay && !errorMessage));
   }, [newDate, newName, newDay, errorMessage]);
 
-  const addItem = () => {
+  const updateItem = () => {
     if (newDate.length < 1 || newName.length < 1 || newDay.length < 1) {
       return;
     }
@@ -98,9 +98,9 @@ function TodoListUpdate({ route }) {
         ref={refDay}
         placeholder="day"
         onChangeText={_handleDayChange}
-        onSubmitEditing={addItem}
+        onSubmitEditing={updateItem}
       />
-      <Button title="Update" disabled={disabled} onPress={addItem} />
+      <Button title="Update" disabled={disabled} onPress={updateItem} />
     </View>
   );
 }
